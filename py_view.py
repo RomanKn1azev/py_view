@@ -46,15 +46,47 @@ class ViewMetrics(QMainWindow):
         file_menu.addSeparator()
         file_menu.addAction(exit_action)
 
+        # Метрики
+        metrics_menu = menubar.addMenu("Метрики")
+
+        # Редактировать метрики
+        edit_metrics_action = QAction("Редактировать", self)
+        edit_metrics_action.triggered.connect(self.edit_metrics)
+        metrics_menu.addAction(edit_metrics_action)
+
+        # Загрузка параметров метрик
+        load_metrics_action = QAction("Загрузить", self)
+        load_metrics_action.triggered.connect(self.load_metrics)
+        metrics_menu.addAction(load_metrics_action)
+
+        # Сохранение параметров метрик
+        save_metrics_action = QAction("Сохранить", self)
+        save_metrics_action.triggered.connect(self.save_metrics)
+        metrics_menu.addAction(save_metrics_action)
 
 
+    # Ф-я создания нового окна
     def create_new_window(self):
         ...
 
+    # Ф-я загрузки данных (csv)
     def load_data(self):
         ...
     
+    # Ф-я сохранения полученных результатов метрик
     def save_resuls_metrics(self):
+        ...
+
+    # Ф-я редактирования метрик
+    def edit_metrics(self):
+        ...
+
+    # Ф-я загрузки параметров метрик
+    def load_metrics(self):
+        ...
+
+    # Ф-я сохранения параметров метрик
+    def save_metrics(self):
         ...
                 
 
@@ -63,7 +95,6 @@ def main():#
     main_window = ViewMetrics()
     main_window.show()
     sys.exit(app.exec_())
-
 
 
 if __name__ == "__main__":
