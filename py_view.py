@@ -6,6 +6,7 @@ import yaml
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QFileDialog, qApp
 from functools import partial
 from typing import Dict
+from data import LoadingData, MetricsData, ResulsData
 
 
 class ViewMetrics(QMainWindow):

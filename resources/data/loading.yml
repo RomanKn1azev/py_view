@@ -1,0 +1,13 @@
+types:
+  classification:
+    cols:
+      - true
+      - pred
+
+  detect:
+    cols:
+      - true
+      - pred
+      - true_box
+      - pred_box
+
