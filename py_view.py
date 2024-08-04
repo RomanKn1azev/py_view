@@ -1,21 +1,31 @@
 import sys
 import pandas as pd
-import yaml
 
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QAction, QFileDialog, qApp
 from functools import partial
 from typing import Dict
-from data import LoadingData, MetricsData, ResulsData
+from data import LoadingData, MetricsData, ResulsData, LabelsData
+from utils import read_yaml_from_path
 
 
 class ViewMetrics(QMainWindow):
     def __init__(self):
-        super().__init__()        
+        super().__init__()
 
-        self.loading_data : Dict[pd.DataFrame] = {}
-        self.metrics_data: Dict[pd.DataFrame] = {}
-        self.resuls_data: Dict[pd.DataFrame] = {}
+        # Параметры данных при загрузки
+        self.loading_params: dict = read_yaml_from_path("resources/data/loading.yml")
+
+        # Параметры данных для хранения метрик
+        self.metrics_params: dict = read_yaml_from_path("resources/data/metrics.yml")     
+
+        # Параметры данных для результатов
+        self.reluts_params: dict = read_yaml_from_path("resources/data/results.yml")
+
+        self.loading_data : Dict[str, LoadingData] = {}
+        self.labels: Dict[str, LabelsData] = {}
+        self.metrics_data: Dict[str, MetricsData] = {}
+        self.resuls_data: Dict[str, ResulsData] = {}
 
         self.initUi()
     
@@ -30,10 +40,10 @@ class ViewMetrics(QMainWindow):
         # Файл меню
         file_menu = menubar.addMenu("Файл")
 
-        # Новое окно
-        new_window_action = QAction("Новое", self)
-        new_window_action.triggered.connect(self.create_new_window)
-        file_menu.addAction(new_window_action)
+        # # Новое окно
+        # new_window_action = QAction("Новое", self)
+        # new_window_action.triggered.connect(self.create_new_window)
+        # file_menu.addAction(new_window_action)
 
         # Загрузить данные
         load_data_action = QAction("Загрузить данные", self)
@@ -113,13 +123,26 @@ class ViewMetrics(QMainWindow):
         results_menu.addAction(clear_view_results_action)
 
 
-    # Ф-я создания нового окна
-    def create_new_window(self):
-        ...
+    # # Ф-я создания нового окна
+    # def create_new_window(self):
+    #     ...
 
     # Ф-я загрузки данных (csv)
     def load_data(self):
-        ...
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        files_path, _ = QFileDialog.getOpenFileNames(
+            self, "QFileDialog.getOpenFileNames()", "", "CSV Files (*.csv)", options=options
+        )
+
+        if files_path is not None:
+            for file_path in files_path:
+                l_data = LoadingData(file_path, self.loading_params)
+                self.loading_data[l_data.name] = l_data
+
+                print(l_data.labels)
+                print(l_data.data)
+
 
     # Ф-я выборочной очистки данных
     def clear_data(self):

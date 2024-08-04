@@ -1,7 +1,0 @@
-confusion_matrix:
-  type:
-  params:
-
-average:
-  type:
-  params:

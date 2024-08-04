@@ -1,13 +1,22 @@
-types:
+tasks:
   classification:
-    cols:
-      - true
-      - pred
+    required_columns:
+      - y_true
+      - y_pred
+    
+    dtypes:
+      y_true: int
+      y_pred: int
 
   detect:
-    cols:
-      - true
-      - pred
+    required_columns:
+      - y_true
+      - y_pred
       - true_box
       - pred_box
 
+    dtypes:
+      y_true: int
+      y_pred: int
+      true_box: list[int]
+      pred_box: list[int]
